@@ -2,6 +2,7 @@
 Transforms any view to sliding panel
 
 Panel supports Anchor points, TabBarController and NavigationController, also it has basic TableView support.
+![Screencapture GIF](https://fat.gfycat.com/OffbeatCaringGalago.gif)
 
 
 # Setup instructions
