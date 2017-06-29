@@ -1,6 +1,8 @@
 # Swift-CTSlidingUpPanel
 Transforms any view to sliding panel
 
+Panel supports Anchor points, TabBarController and NavigationController, also it has basic TableView support.
+
 
 # Setup instructions
 1. Download this repository 
