@@ -4,17 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-SlidingUpPanel_Example.xcscheme</key>
+		<key>CTSlidingUpPanel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-SlidingUpPanel_Tests.xcscheme</key>
+		<key>Pods-CTSlidingUpPanel_Example.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SlidingUpPanel.xcscheme</key>
+		<key>Pods-CTSlidingUpPanel_Tests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1D8A4010BC89530D86DD22D0E23DD982</key>
+		<key>171015227367C6D309F5210DFB2ACA50</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9104F83F4B99F8A921FA29323E864EFE</key>
+		<key>5C06380CF6F93D74EFBC640D9F5AF647</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BE9CF93F77A518B58034775FA5ED01DE</key>
+		<key>B5CFF6533CBAC92C7B2B5374F3C25940</key>
 		<dict>
 			<key>primary</key>
 			<true/>

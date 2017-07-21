@@ -1,16 +1,16 @@
 PODS:
-  - SlidingUpPanel (0.1.0)
+  - CTSlidingUpPanel (0.1.0)
 
 DEPENDENCIES:
-  - SlidingUpPanel (from `../`)
+  - CTSlidingUpPanel (from `../`)
 
 EXTERNAL SOURCES:
-  SlidingUpPanel:
+  CTSlidingUpPanel:
     :path: ../
 
 SPEC CHECKSUMS:
-  SlidingUpPanel: 8ca53ad2bf2ec2a6d432dfde73b77bef9aefde2c
+  CTSlidingUpPanel: 46e56f212d3fef99ebfe28b1992b11d2f038be2c
 
-PODFILE CHECKSUM: 9bf4bbed935928b58abd87404a572ad184900c2e
+PODFILE CHECKSUM: 5e9f6039f73335aaee1fda6fa1783e8d46e9bac3
 
 COCOAPODS: 1.2.1

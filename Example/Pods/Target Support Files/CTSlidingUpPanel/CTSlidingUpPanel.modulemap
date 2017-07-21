@@ -1,0 +1,6 @@
+framework module CTSlidingUpPanel {
+  umbrella header "CTSlidingUpPanel-umbrella.h"
+
+  export *
+  module * { export * }
+}

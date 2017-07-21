@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import SlidingUpPanel
+import CTSlidingUpPanel
 
 class Tests: XCTestCase {
     
