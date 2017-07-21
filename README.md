@@ -1,11 +1,27 @@
 # Swift-CTSlidingUpPanel
+[![Version](https://img.shields.io/cocoapods/v/CTSlidingUpPanel.svg?style=flat)](http://cocoapods.org/pods/CTSlidingUpPanel)
+[![License](https://img.shields.io/cocoapods/l/CTSlidingUpPanel.svg?style=flat)](http://cocoapods.org/pods/CTSlidingUpPanel)
+[![Platform](https://img.shields.io/cocoapods/p/CTSlidingUpPanel.svg?style=flat)](http://cocoapods.org/pods/CTSlidingUpPanel)
+
+
 Transforms any view to sliding panel
 
 Panel supports Anchor points, TabBarController and NavigationController, also it has basic TableView support.
 
 <img src="https://thumbs.gfycat.com/OffbeatCaringGalago-size_restricted.gif" width="350">
 
-# Setup instructions
+
+# Cocoapods
+Add following to your Podfile:
+```
+pod "CTSlidingUpPanel"
+```
+Import(Make sure to build and clean the project): 
+```swift
+import CTSlidingUpPanel
+```
+
+# Manual Setup instructions
 1. Download this repository 
 2. Copy files from lib folder to your project.
 3. Should be done.
