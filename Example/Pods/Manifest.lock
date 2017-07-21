@@ -1,0 +1,16 @@
+PODS:
+  - SlidingUpPanel (0.1.0)
+
+DEPENDENCIES:
+  - SlidingUpPanel (from `../`)
+
+EXTERNAL SOURCES:
+  SlidingUpPanel:
+    :path: ../
+
+SPEC CHECKSUMS:
+  SlidingUpPanel: 8ca53ad2bf2ec2a6d432dfde73b77bef9aefde2c
+
+PODFILE CHECKSUM: 9bf4bbed935928b58abd87404a572ad184900c2e
+
+COCOAPODS: 1.2.1

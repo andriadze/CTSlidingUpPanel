@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'SlidingUpPanel_Example' do
+  pod 'SlidingUpPanel', :path => '../'
+
+  target 'SlidingUpPanel_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
