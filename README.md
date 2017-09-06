@@ -57,6 +57,20 @@ And done, view you provided to bottomView should slide up and down.
 You can do same without Storyboards. Add new subview to your parent and then provide that subview to CTBottomSlideController. 
 It is recomended that you don't give that subview any constraints. 
 
+## In case you want custom width/position of sliding panel
+In this case you should set: Top, Height and other constraints that you want(**But don't set the bottom one**) to the SlidingView and then use this initializer:
+```swift
+bottomController = CTBottomSlideController(topConstraint: slidingPanelTopConstraint, 
+                                            heightConstraint: slidingPanelHeightConstraint, 
+                                            parent: view, 
+                                            bottomView: bottomView, 
+                                            tabController: self.tabBarController!, 
+                                            navController: self.navigationController, 
+                                            visibleHeight: 64)
+```
+**It is IMPORTANT that you don't set the bottom constraint of the sliding view** or the sliding view will start resizing and that
+may affect performace.
+
 ### Delegation and stuff
 1.  Add this to your ViewController
 ```swift 
