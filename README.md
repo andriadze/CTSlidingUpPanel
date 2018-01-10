@@ -12,9 +12,15 @@ Panel supports Anchor points, TabBarController and NavigationController, also it
 
 
 # Cocoapods
+
+### Swift 4
 Add following to your Podfile:
 ```
 pod "CTSlidingUpPanel"
+```
+### Swift 3
+```
+pod "CTSlidingUpPanel", '~> 0.1.1'
 ```
 Import(Make sure to build and clean the project): 
 ```swift
