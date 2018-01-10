@@ -25,7 +25,7 @@ pod "CTSlidingUpPanel", '~> 0.1.1'
 
 ### How to Import
 
-**Make sure to build and clean the project):**
+**Make sure to build and clean the project:**
 
 ```swift
 import CTSlidingUpPanel
