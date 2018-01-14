@@ -91,6 +91,8 @@ may affect performace.
 //This is a wrapper view
 @IBOutlet weak var parentView: UIView!
 
+//In viewDidLoad() or something
+parentView.clipsToBounds = true;
 bottomController = CTBottomSlideController(parent: parentView/*instead of view*/, bottomView: bottomView, 
                         tabController: self.tabBarController!,
                         navController: self.navigationController, visibleHeight: 64)
