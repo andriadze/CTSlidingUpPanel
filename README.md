@@ -81,6 +81,19 @@ bottomController = CTBottomSlideController(topConstraint: slidingPanelTopConstra
 **It is IMPORTANT that you don't set the bottom constraint of the sliding view** or the sliding view will start resizing and that
 may affect performace.
 
+### Iphone X Safe Area support
+
+1. Take a Sliding View(View you provided to CTBottomSlideController) and **wrap it in a generic UIView**.
+2. Set any constraints you want to that wrapper view, place it anywhere resize it as much as you want.
+3. After that in CTBottomSlideController initializer provide that wrapper **as a parrent view** instead of root view.
+```swift
+//This is a wrapper view
+@IBOutlet weak var parentView: UIView!
+
+bottomController = CTBottomSlideController(parent: parentView/*instead of view*/, bottomView: bottomView, 
+                        tabController: self.tabBarController!,
+                        navController: self.navigationController, visibleHeight: 64)
+```
 ### Delegation and stuff
 1.  Add this to your ViewController
 ```swift 
