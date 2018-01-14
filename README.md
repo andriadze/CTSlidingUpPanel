@@ -84,8 +84,9 @@ may affect performace.
 ### iPhone X Safe Area support
 
 1. Take a Sliding View(View you provided to CTBottomSlideController) and **wrap it in a generic UIView**.
-2. Set any constraints you want to that wrapper view, place it anywhere resize it as much as you want.
-3. After that in CTBottomSlideController initializer provide that wrapper **as a parrent view** instead of root view.
+2. **Enable Clip to Bounds on the wrapper View**
+3. Set any constraints you want to that **wrapper view**, place it anywhere resize it as much as you want.
+4. After that in CTBottomSlideController initializer provide that wrapper **as a parrent view** instead of root view.
 ```swift
 //This is a wrapper view
 @IBOutlet weak var parentView: UIView!
