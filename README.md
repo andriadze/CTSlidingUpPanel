@@ -127,7 +127,9 @@ func closePanel();
 func hidePanel();
 ```
 Use this to check panels state
-```swift bottomController?.currentState ```
+```swift 
+bottomController?.currentState 
+```
 State can be
 ```swift 
 .collapsed
