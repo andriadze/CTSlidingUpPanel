@@ -120,7 +120,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         
         view.addConstraints([startConstraint, endConstraint, self.topConstraint, self.heightConstraint])
         self.view.layoutIfNeeded()
-
+        
     }
     
     
@@ -180,7 +180,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     
     public func setSlideEnabled(_ enabled: Bool)
     {
-        self.panGestureRecognizer?.isEnabled = false;
+        self.panGestureRecognizer?.isEnabled = enabled;
     }
     
     
