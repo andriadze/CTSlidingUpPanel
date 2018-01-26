@@ -125,6 +125,7 @@ func expandPanel();
 func anchorPanel();
 func closePanel();
 func hidePanel();
+func setSlideEnabled(bool) // Enable or disable sliding
 ```
 Use this to check panels state
 ```swift 
