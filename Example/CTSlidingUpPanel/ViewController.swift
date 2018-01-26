@@ -18,6 +18,8 @@ class ViewController: UIViewController, CTBottomSlideDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         bottomController = CTBottomSlideController(parent: view, bottomView: bottomView, tabController: self.tabBarController!, navController: self.navigationController, visibleHeight: 64)
+        
+        
         bottomController?.setAnchorPoint(anchor: 0.7)
         bottomController?.delegate = self;
         

@@ -13,6 +13,7 @@
 		3F7D86541F21EFB1007730EB /* CTSlidingUpPanel.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D86511F21EFB1007730EB /* CTSlidingUpPanel.podspec */; };
 		3F7D86551F21EFB1007730EB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D86521F21EFB1007730EB /* LICENSE */; };
 		3F7D86561F21EFB1007730EB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D86531F21EFB1007730EB /* README.md */; };
+		3F815322201B0823000FFDB0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F815321201B0823000FFDB0 /* TableViewController.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -36,6 +37,7 @@
 		3F7D86511F21EFB1007730EB /* CTSlidingUpPanel.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CTSlidingUpPanel.podspec; path = ../CTSlidingUpPanel.podspec; sourceTree = "<group>"; };
 		3F7D86521F21EFB1007730EB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		3F7D86531F21EFB1007730EB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		3F815321201B0823000FFDB0 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		57F60648601FA55D108B2A88 /* Pods_CTSlidingUpPanel_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CTSlidingUpPanel_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59A9417AEF44A1F665A68FEE /* Pods-CTSlidingUpPanel_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CTSlidingUpPanel_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-CTSlidingUpPanel_Example/Pods-CTSlidingUpPanel_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* CTSlidingUpPanel_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CTSlidingUpPanel_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +100,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				3F7D86451F21ED0F007730EB /* ViewController.swift */,
+				3F815321201B0823000FFDB0 /* TableViewController.swift */,
 				3F7D86471F21ED37007730EB /* Main.storyboard */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -371,6 +374,7 @@
 				3F7D86561F21EFB1007730EB /* README.md in Sources */,
 				3F7D86461F21ED0F007730EB /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				3F815322201B0823000FFDB0 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
