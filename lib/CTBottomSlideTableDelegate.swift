@@ -7,7 +7,7 @@
 //
 import UIKit
 
-protocol CTBottomSlideDelegate: class {
+public protocol CTBottomSlideDelegate: class {
     func didPanelCollapse()
     func didPanelExpand()
     func didPanelAnchor()

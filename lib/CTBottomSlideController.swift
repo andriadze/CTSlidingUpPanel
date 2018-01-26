@@ -11,9 +11,9 @@ import UIKit
 private var ContentOffsetKVO = 0
 private var ConstraintConstantKVO = 1;
 
-class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
+public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
 {
-    enum SlideState
+    public enum SlideState
     {
         case collapsed
         case expanded
@@ -26,9 +26,8 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     weak var view:UIView!;
     weak var bottomView:UIView!;
     weak var scrollView:UIScrollView?;
-
     
-    public weak var delegate:CTBottomSlideDelegate?;
+    
     
     weak var tabBarController:UITabBarController?;
     weak var navigationController:UINavigationController?;
@@ -39,7 +38,6 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     private var initalLocation:CGFloat!;
     private var initialTouchLocation:CGFloat!;
     private var originalConstraint:CGFloat!;
-    var isPanelExpanded:Bool = false;
     
     private var panGestureRecognizer:UIPanGestureRecognizer!;
     
@@ -49,10 +47,12 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     private var isInMotion = false;
     
     
-    var currentState = SlideState.collapsed;
+    public var currentState = SlideState.collapsed;
+    public weak var delegate:CTBottomSlideDelegate?;
+    public var isPanelExpanded:Bool = false;
     
     
-    init(topConstraint:NSLayoutConstraint, heightConstraint: NSLayoutConstraint, parent: UIView, bottomView: UIView, tabController:UITabBarController?, navController:UINavigationController?, visibleHeight: CGFloat){
+    public init(topConstraint:NSLayoutConstraint, heightConstraint: NSLayoutConstraint, parent: UIView, bottomView: UIView, tabController:UITabBarController?, navController:UINavigationController?, visibleHeight: CGFloat){
         super.init()
         
         self.topConstraint = topConstraint;
@@ -71,7 +71,7 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         addConstraintChangeKVO()
     }
     
-    init(parent: UIView, bottomView: UIView, tabController:UITabBarController?, navController:UINavigationController?, visibleHeight: CGFloat){
+    public init(parent: UIView, bottomView: UIView, tabController:UITabBarController?, navController:UINavigationController?, visibleHeight: CGFloat){
         super.init()
         
         self.view = parent;
@@ -106,40 +106,42 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     
     private func setPrimaryConstraints()
     {
+        
         self.bottomView.translatesAutoresizingMaskIntoConstraints = false
         
         self.topConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: view,
-                                                    attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
+                                                attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
         let startConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: view,
                                                  attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
         let endConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: view,
                                                attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
         self.heightConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil,
-                                                  attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: view.frame.height)
+                                                   attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: view.frame.height)
         
         
         view.addConstraints([startConstraint, endConstraint, self.topConstraint, self.heightConstraint])
         self.view.layoutIfNeeded()
-
+        
     }
     
     
     //MARK: Setters
-    func set(navController: UINavigationController)
+    public func set(navController: UINavigationController)
     {
         self.navigationController = navController;
     }
     
-    func set(tabController: UITabBarController)
+    public func set(tabController: UITabBarController)
     {
         self.tabBarController = tabController;
     }
     
-    func set(table:UITableView)
+    public func set(table:UITableView)
     {
         if (scrollView != nil){
             self.removeKVO(scrollView: scrollView!)
         }
+        
         scrollView = table;
         //scrollView!.panGestureRecognizer.require(toFail: panGestureRecognizer)
         self.addKVO(scrollView: scrollView!);
@@ -178,6 +180,11 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         }
     }
     
+    public func setSlideEnabled(_ enabled: Bool)
+    {
+        self.panGestureRecognizer?.isEnabled = enabled;
+    }
+    
     
     //MARK: init
     private func initBottomPanel(visibleHeight:CGFloat)
@@ -185,6 +192,7 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         self.visibleHeight = visibleHeight
         
         panGestureRecognizer = UIPanGestureRecognizer.init(target: self, action: #selector(self.moveViewWithGestureRecognizer(panGestureRecognizer:)))
+        panGestureRecognizer.delegate = self;
         bottomView.addGestureRecognizer(panGestureRecognizer);
         updateConstraint(visibleHeight);
     }
@@ -202,7 +210,7 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     }
     
     
-    func setAnchorPoint(anchor:CGFloat)
+    public func setAnchorPoint(anchor:CGFloat)
     {
         var checkedAnchor = anchor;
         
@@ -220,15 +228,31 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     
     
     //MARK: Gesture recognition
-    func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        
+        if(currentState != .collapsed && scrollView != nil){
+            if let tempTableView:UITableView = scrollView as? UITableView{
+                
+                let check = tempTableView.isEditing;
+                let locationInTable = touch.location(in: bottomView);
+                if(check && tempTableView.frame.contains(locationInTable)){
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+    
+    
+    public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         initalLocation = topConstraint.constant;
         initialTouchLocation = touches.first?.location(in: self.view).y
     }
     
-    func moveViewWithGestureRecognizer(panGestureRecognizer:UIPanGestureRecognizer ){
+    @objc func moveViewWithGestureRecognizer(panGestureRecognizer:UIPanGestureRecognizer ){
         let touchLocation:CGPoint = panGestureRecognizer.location(in: self.view);
-        
-        
         if(panGestureRecognizer.state == .changed){
             if initialTouchLocation == nil{
                 initialTouchLocation = touchLocation.y;
@@ -258,6 +282,7 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         }else if(panGestureRecognizer.state == .ended){
             
             if(!panGestureRecognizer.isUp(theViewYouArePassing: self.view)){
+
                 if(initialTouchLocation - touchLocation.y > 23){
                     if(topConstraint.constant < anchorPoint - 23){
                         self.performExpandPanel()
@@ -277,6 +302,8 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
                 }
             }else
             {
+                
+                
                 if(topConstraint.constant > anchorPoint + 23){
                     self.performClosePanel()
                 }else{
@@ -388,12 +415,12 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     
     private func addConstraintChangeKVO()
     {
-        topConstraint.addObserver(self, forKeyPath: "constant", options: [.initial, .new], context: &ConstraintConstantKVO);
+        topConstraint?.addObserver(self, forKeyPath: "constant", options: [.initial, .new], context: &ConstraintConstantKVO);
     }
     
     private func removeConstraintChangeKVO()
     {
-        topConstraint.removeObserver(self, forKeyPath: "constant", context: &ConstraintConstantKVO);
+        topConstraint?.removeObserver(self, forKeyPath: "constant", context: &ConstraintConstantKVO);
     }
     
     //MARK: Tableview
@@ -414,7 +441,7 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         )
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         switch keyPath {
             
         case .some("contentOffset"):
@@ -434,7 +461,7 @@ class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     }
     
     func checkOffset()
-    {
+    {        
         if scrollView == nil || isInMotion{
             return
         }

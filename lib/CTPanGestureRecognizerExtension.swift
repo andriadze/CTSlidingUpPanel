@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIPanGestureRecognizer {
+public extension UIPanGestureRecognizer {
     
     func isLeft(theViewYouArePassing: UIView) -> Bool {
         let vel : CGPoint = velocity(in: theViewYouArePassing)
