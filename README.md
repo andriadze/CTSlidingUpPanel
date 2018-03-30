@@ -119,6 +119,11 @@ Use this if you want sliding panel to slide up or down depending on TableViews o
 ```swift
 func set(table:UITableView)
 ```
+Use this if you want to specify how far up sliding panel should go
+```swift
+func setExpandedTopMargin(pixels: CGFloat)
+```
+
 Use these to programatically change panels state
 ```swift
 func expandPanel();
