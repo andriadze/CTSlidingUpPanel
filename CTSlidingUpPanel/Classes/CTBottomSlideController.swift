@@ -45,11 +45,12 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     private var anchorPoint:CGFloat = 0;
     
     private var isInMotion = false;
-    
+    private var topPadding:CGFloat = 0;
     
     public var currentState = SlideState.collapsed;
     public weak var delegate:CTBottomSlideDelegate?;
     public var isPanelExpanded:Bool = false;
+    
     
     
     public init(topConstraint:NSLayoutConstraint, heightConstraint: NSLayoutConstraint, parent: UIView, bottomView: UIView, tabController:UITabBarController?, navController:UINavigationController?, visibleHeight: CGFloat){
@@ -209,6 +210,16 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         bottomView.layoutIfNeeded()
     }
     
+    public func setExpandedTopMargin(pixels: CGFloat)
+    {
+        var checkedPixels = pixels;
+        if(checkedPixels < 0){
+            checkedPixels = 0;
+        }
+        
+        self.topPadding = pixels;
+    }
+    
     
     public func setAnchorPoint(anchor:CGFloat)
     {
@@ -262,9 +273,9 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
             
             topConstraint.constant = initalLocation - (initialTouchLocation - touchLocation.y)
             
-            if(topConstraint.constant < 0)
+            if(topConstraint.constant < self.topPadding)
             {
-                topConstraint.constant = 0;
+                topConstraint.constant = self.topPadding;
             }else if(topConstraint.constant > originalConstraint)
             {
                 topConstraint.constant = originalConstraint;
@@ -364,7 +375,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         isInMotion = true;
         
         isPanelExpanded = true;
-        self.topConstraint.constant = 0;
+        self.topConstraint.constant = self.topPadding;
         
         self.view.setNeedsLayout();
         
@@ -481,7 +492,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
                 self.movePanelToAnchor()
             }
         }else if(scrollView!.contentOffset.y > 50){
-            if(currentState == .anchored || anchorPoint <= 0){
+            if(currentState == .anchored || anchorPoint <= self.topPadding){
                 self.expandPanel()
             }else if(currentState == .collapsed){
                 self.movePanelToAnchor()

@@ -23,6 +23,10 @@ class ViewController: UIViewController, CTBottomSlideDelegate{
         bottomController?.setAnchorPoint(anchor: 0.7)
         bottomController?.delegate = self;
         
+        
+        //Uncomment to specify top margin on expanded panel
+        //bottomController?.setExpandedTopMargin(pixels: 100)
+        
         if bottomController?.currentState == .collapsed
         {
             //do anything, i don't care
