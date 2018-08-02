@@ -97,7 +97,11 @@ bottomController = CTBottomSlideController(parent: parentView/*instead of view*/
                         tabController: self.tabBarController!,
                         navController: self.navigationController, visibleHeight: 64)
 ```
-### Delegation and stuff
+## Getting events from Sliding Controller
+There are 2 ways of doing this. One is with delegation and other is by using closures.
+
+### Delegation:
+
 1.  Add this to your ViewController
 ```swift 
    class ViewController: UIViewController, CTBottomSlideDelegate
@@ -114,6 +118,26 @@ bottomController = CTBottomSlideController(parent: parentView/*instead of view*/
   func didPanelAnchor();
   func didPanelMove(panelOffset: CGFloat);
 ```
+
+### Closures:
+```swift
+ bottomController?.onPanelExpanded = {
+      print("Panel Expanded in closure")
+ }
+        
+ bottomController?.onPanelCollapsed = {
+      print("Panel Collapsed in closure")
+ }
+        
+ bottomController?.onPanelAnchored = {
+      print("On Panel anchored")
+ }
+        
+ bottomController?.onPanelMoved = { offset in
+      print("Panel moved in closure " + offset.description)
+ }
+```
+
 ### Methods and Other stuff
 Use this if you want sliding panel to slide up or down depending on TableViews offset:
 ```swift
