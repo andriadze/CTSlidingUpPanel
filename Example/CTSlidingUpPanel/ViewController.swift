@@ -9,6 +9,8 @@
 import UIKit
 import CTSlidingUpPanel
 
+
+
 class ViewController: UIViewController, CTBottomSlideDelegate{
     @IBOutlet weak var bottomView: UIView!
 
@@ -23,6 +25,17 @@ class ViewController: UIViewController, CTBottomSlideDelegate{
         bottomController?.setAnchorPoint(anchor: 0.7)
         bottomController?.delegate = self;
         
+        bottomController?.onPanelExpanded = {
+            print("Panel Expanded in closure")
+        }
+        
+        bottomController?.onPanelCollapsed = {
+            print("Panel Collapsed in closure")
+        }
+        
+        bottomController?.onPanelMoved = { offset in
+            print("Panel moved in closure " + offset.description)
+        }
         
         //Uncomment to specify top margin on expanded panel
         //bottomController?.setExpandedTopMargin(pixels: 100)

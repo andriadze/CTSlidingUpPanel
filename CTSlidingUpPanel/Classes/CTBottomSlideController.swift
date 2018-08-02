@@ -51,6 +51,10 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     public weak var delegate:CTBottomSlideDelegate?;
     public var isPanelExpanded:Bool = false;
     
+    public var onPanelExpanded: (() -> Void)?
+    public var onPanelCollapsed: (() -> Void)?
+    public var onPanelAnchored: (() -> Void)?
+    public var onPanelMoved: ((CGFloat) -> Void)?
     
     
     public init(topConstraint:NSLayoutConstraint, heightConstraint: NSLayoutConstraint, parent: UIView, bottomView: UIView, tabController:UITabBarController?, navController:UINavigationController?, visibleHeight: CGFloat){
@@ -366,6 +370,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         
         
         delegate?.didPanelAnchor();
+        self.onPanelAnchored?();
     }
     
     private func performExpandPanel()
@@ -386,6 +391,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         });
         
         delegate?.didPanelExpand();
+        self.onPanelExpanded?();
     }
     
     
@@ -405,6 +411,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         });
         
         delegate?.didPanelCollapse();
+        self.onPanelCollapsed?();
     }
     
     private func performHidePanel()
@@ -422,6 +429,8 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         });
         
         delegate?.didPanelCollapse();
+        self.onPanelCollapsed?();
+
     }
     
     private func addConstraintChangeKVO()
@@ -469,6 +478,8 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     {
         let offset:CGFloat = 1 - (topConstraint.constant/originalConstraint);
         self.delegate?.didPanelMove(panelOffset: offset)
+        self.onPanelMoved?(offset)
+        
     }
     
     func checkOffset()
