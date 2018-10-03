@@ -268,12 +268,12 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     
     @objc func moveViewWithGestureRecognizer(panGestureRecognizer:UIPanGestureRecognizer ){
         let touchLocation:CGPoint = panGestureRecognizer.location(in: self.view);
+        if initialTouchLocation == nil{
+            initialTouchLocation = touchLocation.y;
+            initalLocation = topConstraint.constant;
+        }
+        
         if(panGestureRecognizer.state == .changed){
-            if initialTouchLocation == nil{
-                initialTouchLocation = touchLocation.y;
-                initalLocation = topConstraint.constant;
-            }
-            
             
             topConstraint.constant = initalLocation - (initialTouchLocation - touchLocation.y)
             
