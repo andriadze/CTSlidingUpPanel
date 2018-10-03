@@ -203,7 +203,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     }
     
     private func updateConstraint(_ visibleHeight:CGFloat) -> Void
-    {        
+    {
         let extrasHeight = UIApplication.shared.statusBarFrame.height +
             (self.navigationController?.navigationBar.frame.height ?? 0)
         expectedHeight = self.view.bounds.size.height - extrasHeight;
@@ -268,12 +268,12 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     
     @objc func moveViewWithGestureRecognizer(panGestureRecognizer:UIPanGestureRecognizer ){
         let touchLocation:CGPoint = panGestureRecognizer.location(in: self.view);
+        if initialTouchLocation == nil{
+            initialTouchLocation = touchLocation.y;
+            initalLocation = topConstraint.constant;
+        }
+        
         if(panGestureRecognizer.state == .changed){
-            if initialTouchLocation == nil{
-                initialTouchLocation = touchLocation.y;
-                initalLocation = topConstraint.constant;
-            }
-            
             
             topConstraint.constant = initalLocation - (initialTouchLocation - touchLocation.y)
             
@@ -297,7 +297,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         }else if(panGestureRecognizer.state == .ended){
             
             if(!panGestureRecognizer.isUp(theViewYouArePassing: self.view)){
-
+                
                 if(initialTouchLocation - touchLocation.y > 23){
                     if(topConstraint.constant < anchorPoint - 23){
                         self.performExpandPanel()
@@ -430,7 +430,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         
         delegate?.didPanelCollapse();
         self.onPanelCollapsed?();
-
+        
     }
     
     private func addConstraintChangeKVO()
@@ -483,7 +483,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     }
     
     func checkOffset()
-    {        
+    {
         if scrollView == nil || isInMotion{
             return
         }
