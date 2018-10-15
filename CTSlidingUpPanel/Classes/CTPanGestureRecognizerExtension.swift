@@ -22,7 +22,7 @@ public extension UIPanGestureRecognizer {
     
     func isUp(theViewYouArePassing: UIView) -> Bool {
         let vel : CGPoint = velocity(in: theViewYouArePassing)
-        if vel.y < 0 {
+        if vel.y <= 0 {
             return false
         } else {
             return true
