@@ -323,6 +323,9 @@
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0940;
 				TargetAttributes = {
+					171015227367C6D309F5210DFB2ACA50 = {
+						LastSwiftMigration = 1000;
+					};
 					B5CFF6533CBAC92C7B2B5374F3C25940 = {
 						LastSwiftMigration = 0920;
 					};
@@ -545,7 +548,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -674,7 +677,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";

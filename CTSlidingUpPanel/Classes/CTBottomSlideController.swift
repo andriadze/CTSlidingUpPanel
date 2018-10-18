@@ -114,14 +114,14 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         
         self.bottomView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.topConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: view,
-                                                attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-        let startConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: view,
-                                                 attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
-        let endConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: view,
-                                               attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
-        self.heightConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil,
-                                                   attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: view.frame.height)
+        self.topConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view,
+                                                attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+        let startConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view,
+                                                 attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
+        let endConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view,
+                                               attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
+        self.heightConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil,
+                                                   attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: view.frame.height)
         
         
         view.addConstraints([startConstraint, endConstraint, self.topConstraint, self.heightConstraint])
