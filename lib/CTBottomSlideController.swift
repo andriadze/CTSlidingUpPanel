@@ -21,8 +21,8 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         case hidden
     }
     
-    weak var topConstraint:NSLayoutConstraint!;
-    weak var heightConstraint:NSLayoutConstraint!;
+    var topConstraint:NSLayoutConstraint!;
+    var heightConstraint:NSLayoutConstraint!;
     weak var view:UIView!;
     weak var bottomView:UIView!;
     weak var scrollView:UIScrollView?;
@@ -42,7 +42,9 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     private var panGestureRecognizer:UIPanGestureRecognizer!;
     
     private var visibleHeight:CGFloat = 0;
-    private var anchorPoint:CGFloat = 0;
+    private var anchorPointInPixels:CGFloat = 0;
+    private var lastSetAnchor:CGFloat = 0;
+    
     
     private var isInMotion = false;
     private var topPadding:CGFloat = 0;
@@ -72,7 +74,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         {
             self.set(navController: navController!);
         }
-        self.initBottomPanel(visibleHeight: visibleHeight)
+        self.initBottomPanel(visibleHeight: visibleHeight, shouldAnimate: false)
         addConstraintChangeKVO()
     }
     
@@ -91,7 +93,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         }
         
         self.setPrimaryConstraints();
-        self.initBottomPanel(visibleHeight: visibleHeight)
+        self.initBottomPanel(visibleHeight: visibleHeight, shouldAnimate: false)
         addConstraintChangeKVO()
     }
     
@@ -99,14 +101,19 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     deinit
     {
         print("Bottom panel deiniting");
-        removeConstraintChangeKVO();
+        removeConstraintChangeKVO()
         
         if scrollView != nil{
             self.removeKVO(scrollView: scrollView!)
         }
         if(panGestureRecognizer != nil){
-            bottomView.removeGestureRecognizer(panGestureRecognizer)
+            bottomView?.removeGestureRecognizer(panGestureRecognizer)
         }
+        
+        self.bottomView = nil;
+        self.view = nil;
+        self.topConstraint = nil;
+        self.heightConstraint = nil;
     }
     
     private func setPrimaryConstraints()
@@ -114,19 +121,30 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         
         self.bottomView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.topConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: view,
-                                                attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
-        let startConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: view,
-                                                 attribute: NSLayoutAttribute.leading, multiplier: 1, constant: 0)
-        let endConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: view,
-                                               attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
-        self.heightConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil,
-                                                   attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: view.frame.height)
+        self.topConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view,
+                                                attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1, constant: 0)
+        let startConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view,
+                                                 attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1, constant: 0)
+        let endConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view,
+                                               attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1, constant: 0)
+        self.heightConstraint = NSLayoutConstraint(item: self.bottomView, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil,
+                                                   attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1, constant: view.frame.height)
         
         
         view.addConstraints([startConstraint, endConstraint, self.topConstraint, self.heightConstraint])
         self.view.layoutIfNeeded()
         
+    }
+    
+    public func viewWillTransition(to size:CGSize, with coordinator: UIViewControllerTransitionCoordinator){
+        //Start Animation to new Size
+        reinitBottomController(with: size)
+        coordinator.animate(alongsideTransition: nil, completion: {
+            _ in
+            //Need to reinit to acquire new height of Status bar, Navigation bar and so on/
+            self.initBottomPanel(visibleHeight: self.visibleHeight, shouldAnimate: true)
+            self.setAnchorPoint(anchor: self.lastSetAnchor);
+        })
     }
     
     
@@ -188,29 +206,78 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     public func setSlideEnabled(_ enabled: Bool)
     {
         self.panGestureRecognizer?.isEnabled = enabled;
+        
     }
     
     
     //MARK: init
-    private func initBottomPanel(visibleHeight:CGFloat)
+    private func reinitBottomController(with size:CGSize){
+        let extrasHeight = UIApplication.shared.statusBarFrame.height +
+            (self.navigationController?.navigationBar.frame.height ?? 0)
+        
+        expectedHeight = size.height - extrasHeight;
+        self.anchorPointInPixels = expectedHeight * (1 - lastSetAnchor);
+        heightConstraint.constant = expectedHeight;
+        
+        if(currentState == .expanded){
+            self.topConstraint.constant = self.topPadding;
+        }else if(currentState == .anchored){
+            self.topConstraint.constant = anchorPointInPixels;
+        }else if(currentState == .collapsed){
+            //performClosePanel()
+            heightConstraint.constant = expectedHeight;
+            topConstraint.constant = (size.height - visibleHeight - (self.tabBarController?.tabBar.frame.size.height ?? 0));
+        }else{
+            performHidePanel()
+        }
+        
+        originalConstraint = (size.height - extrasHeight - visibleHeight - (self.tabBarController?.tabBar.frame.size.height ?? 0));
+        bottomView.layoutIfNeeded()
+    }
+    
+    
+    private func initBottomPanel(visibleHeight:CGFloat, shouldAnimate:Bool)
     {
         self.visibleHeight = visibleHeight
         
         panGestureRecognizer = UIPanGestureRecognizer.init(target: self, action: #selector(self.moveViewWithGestureRecognizer(panGestureRecognizer:)))
         panGestureRecognizer.delegate = self;
         bottomView.addGestureRecognizer(panGestureRecognizer);
-        updateConstraint(visibleHeight);
+        updateConstraint(visibleHeight, shouldAnimate: shouldAnimate);
     }
     
-    private func updateConstraint(_ visibleHeight:CGFloat) -> Void
-    {
+    private func updateConstraint(_ visibleHeight:CGFloat, shouldAnimate:Bool) -> Void
+    {        
         let extrasHeight = UIApplication.shared.statusBarFrame.height +
             (self.navigationController?.navigationBar.frame.height ?? 0)
         expectedHeight = self.view.bounds.size.height - extrasHeight;
-        
+        originalConstraint = (self.view.bounds.size.height - extrasHeight - visibleHeight - (self.tabBarController?.tabBar.frame.size.height ?? 0));
         heightConstraint.constant = expectedHeight;
-        topConstraint.constant = (self.view.bounds.size.height - extrasHeight - visibleHeight - (self.tabBarController?.tabBar.frame.size.height ?? 0));
-        originalConstraint = topConstraint.constant;
+        
+        
+        if(currentState == .expanded){
+            if(shouldAnimate){
+                performExpandPanel()
+            }else{
+                self.topConstraint.constant = self.topPadding;
+            }
+        }else if(currentState == .anchored){
+            if(shouldAnimate){
+                movePanelToAnchor()
+            }else{
+                self.topConstraint.constant = anchorPointInPixels;
+            }
+            
+        }else if(currentState == .collapsed){
+            if(shouldAnimate){
+                performClosePanel()
+            }else{
+                topConstraint.constant = originalConstraint
+            }
+        }else{
+            performHidePanel()
+        }
+        
         bottomView.layoutIfNeeded()
     }
     
@@ -237,8 +304,8 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         {
             checkedAnchor = 0;
         }
-        
-        self.anchorPoint = self.expectedHeight * (1 - checkedAnchor);
+        lastSetAnchor = anchor;
+        self.anchorPointInPixels = self.expectedHeight * (1 - checkedAnchor);
     }
     
     
@@ -299,7 +366,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
             if(!panGestureRecognizer.isUp(theViewYouArePassing: self.view)){
                 
                 if(initialTouchLocation - touchLocation.y > 23){
-                    if(topConstraint.constant < anchorPoint - 23){
+                    if(topConstraint.constant < anchorPointInPixels - 23){
                         self.performExpandPanel()
                     }else{
                         self.movePanelToAnchor()
@@ -307,7 +374,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
                 }else{
                     
                     
-                    if(topConstraint.constant > anchorPoint + 23)
+                    if(topConstraint.constant > anchorPointInPixels + 23)
                     {
                         self.performClosePanel()
                     }else{
@@ -315,11 +382,10 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
                     }
                     
                 }
-            }else
-            {
+            }else {
                 
                 
-                if(topConstraint.constant > anchorPoint + 23){
+                if(topConstraint.constant > anchorPointInPixels + 23){
                     self.performClosePanel()
                 }else{
                     self.movePanelToAnchor()
@@ -357,7 +423,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
         isPanelExpanded = true;
         isInMotion = true;
         
-        self.topConstraint.constant = anchorPoint;
+        self.topConstraint.constant = anchorPointInPixels;
         
         self.view.setNeedsLayout();
         
@@ -483,7 +549,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     }
     
     func checkOffset()
-    {
+    {        
         if scrollView == nil || isInMotion{
             return
         }
@@ -503,7 +569,7 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
                 self.movePanelToAnchor()
             }
         }else if(scrollView!.contentOffset.y > 50){
-            if(currentState == .anchored || anchorPoint <= self.topPadding){
+            if(currentState == .anchored || anchorPointInPixels <= self.topPadding){
                 self.expandPanel()
             }else if(currentState == .collapsed){
                 self.movePanelToAnchor()
