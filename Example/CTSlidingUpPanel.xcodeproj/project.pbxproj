@@ -12,7 +12,6 @@
 		3F7D86481F21ED37007730EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D86471F21ED37007730EB /* Main.storyboard */; };
 		3F7D86541F21EFB1007730EB /* CTSlidingUpPanel.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D86511F21EFB1007730EB /* CTSlidingUpPanel.podspec */; };
 		3F7D86551F21EFB1007730EB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3F7D86521F21EFB1007730EB /* LICENSE */; };
-		3F7D86561F21EFB1007730EB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 3F7D86531F21EFB1007730EB /* README.md */; };
 		3F815322201B0823000FFDB0 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F815321201B0823000FFDB0 /* TableViewController.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -373,7 +372,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F7D86561F21EFB1007730EB /* README.md in Sources */,
 				3F7D86461F21ED0F007730EB /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				3F815322201B0823000FFDB0 /* TableViewController.swift in Sources */,
@@ -548,10 +546,6 @@
 			baseConfigurationReference = 7E5C94332B0A0B574C96B755 /* Pods-CTSlidingUpPanel_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = CM5FBCSTN5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -569,10 +563,6 @@
 			baseConfigurationReference = AE8A95337CB99EAE658A9919 /* Pods-CTSlidingUpPanel_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = CM5FBCSTN5;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";

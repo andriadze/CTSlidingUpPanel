@@ -45,6 +45,11 @@ class ViewController: UIViewController, CTBottomSlideDelegate{
             //do anything, i don't care
         }
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        bottomController?.viewWillTransition(to: size, with: coordinator)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
