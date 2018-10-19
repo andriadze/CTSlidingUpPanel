@@ -62,6 +62,13 @@ After that in your ViewController:
         //0 is bottom and 1 is top. 0.5 would be center                
         bottomController?.setAnchorPoint(anchor: 0.7)
     }
+    
+    ///Added in Version: 1.1.0 - To support Screen orientation changes!
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        bottomController?.viewWillTransition(to: size, with: coordinator)
+    }
+    
 ```
 And done, view you provided to bottomView should slide up and down.
 
