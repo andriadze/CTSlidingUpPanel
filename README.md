@@ -57,7 +57,7 @@ After that in your ViewController:
         super.viewDidLoad()
         //You can provide nil to tabController and navigationController
         bottomController = CTBottomSlideController(parent: view, bottomView: bottomView, 
-                        tabController: self.tabBarController!,
+                        tabController: self.tabBarController?,
                         navController: self.navigationController, visibleHeight: 64)
         //0 is bottom and 1 is top. 0.5 would be center                
         bottomController?.setAnchorPoint(anchor: 0.7)
