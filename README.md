@@ -175,6 +175,4 @@ State can be
 .anchored
 .hidden
 ```
-# Question? Bug? Request?
-Feel free to open up a new issue. I will try to respond as quick as I can
 
