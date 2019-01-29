@@ -161,13 +161,21 @@ public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
     
     public func set(table:UITableView)
     {
-        if (scrollView != nil){
-            self.removeKVO(scrollView: scrollView!)
+        set(scrollView: table)
+    }
+    
+    public func set(collectionView: UICollectionView) {
+        set(scrollView: collectionView)
+    }
+    
+    public func set(scrollView: UIScrollView){
+        if (self.scrollView != nil){
+            self.removeKVO(scrollView: self.scrollView!)
         }
         
-        scrollView = table;
+        self.scrollView = scrollView;
         //scrollView!.panGestureRecognizer.require(toFail: panGestureRecognizer)
-        self.addKVO(scrollView: scrollView!);
+        self.addKVO(scrollView: self.scrollView!);
     }
     
     
