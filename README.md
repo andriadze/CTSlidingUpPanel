@@ -1,4 +1,4 @@
-# Swift-CTSlidingUpPanel
+# iOS-CTSlidingUpPanel
 [![Version](https://img.shields.io/cocoapods/v/CTSlidingUpPanel.svg?style=flat)](http://cocoapods.org/pods/CTSlidingUpPanel)
 [![License](https://img.shields.io/cocoapods/l/CTSlidingUpPanel.svg?style=flat)](http://cocoapods.org/pods/CTSlidingUpPanel)
 [![Platform](https://img.shields.io/cocoapods/p/CTSlidingUpPanel.svg?style=flat)](http://cocoapods.org/pods/CTSlidingUpPanel)
