@@ -23,7 +23,6 @@ pod "CTSlidingUpPanel"
 pod "CTSlidingUpPanel", '~> 1.0.4'
 ```
 
-
 ### How to Import
 
 **Make sure to build and clean the project:**
@@ -31,6 +30,21 @@ pod "CTSlidingUpPanel", '~> 1.0.4'
 ```swift
 import CTSlidingUpPanel
 ```
+
+### Objective C - support
+Starting from `Version 1.2.0` you can use this library in Objective C projects.
+
+To do this first add: `use_frameworks!` - in your podfile. Run pod install and build the project.
+
+To import in Objective C class use:
+
+`@import CTSlidingUpPanel;`
+
+Example of constructor in Objective C:
+```swift 
+[[CTBottomSlideController alloc] initWithParent:self.view bottomView:_testView tabController:nil navController:nil visibleHeight:20];
+```
+
 
 # Manual Setup instructions
 1. Download this repository 
