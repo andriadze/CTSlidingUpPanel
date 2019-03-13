@@ -10,7 +10,7 @@ import UIKit
 
 private var ContentOffsetKVO = 0
 private var ConstraintConstantKVO = 1;
-
+@objcMembers
 public class CTBottomSlideController : NSObject, UIGestureRecognizerDelegate
 {
     public enum SlideState
