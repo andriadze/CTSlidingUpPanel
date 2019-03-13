@@ -38,10 +38,12 @@ To do this first add: `use_frameworks!` - in your podfile. Run pod install and b
 
 To import in Objective C class use:
 
-`@import CTSlidingUpPanel;`
+```objc
+@import CTSlidingUpPanel;
+```
 
 Example of constructor in Objective C:
-```swift 
+```objc 
 [[CTBottomSlideController alloc] initWithParent:self.view bottomView:_testView tabController:nil navController:nil visibleHeight:20];
 ```
 
