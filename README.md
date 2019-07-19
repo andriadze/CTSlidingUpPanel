@@ -163,16 +163,20 @@ There are 2 ways of doing this. One is with delegation and other is by using clo
 ```
 
 ### Methods and Other stuff
-Use this if you want sliding panel to slide up or down depending on TableViews offset:
+Use this if you want sliding panel to slide up or down depending on ScrollViews offset:
 ```swift
+func set(collectionView: UICollectionView)
+func set(scrollView: UIScrollView)
 func set(table:UITableView)
 ```
-Use this if you want to specify how far up sliding panel should go
+You can use ```set(scrollView: UIScrollView)``` for any type of scrollview. In reality other methods just call this one
+
+#### Use this if you want to specify how far up sliding panel should go
 ```swift
 func setExpandedTopMargin(pixels: CGFloat)
 ```
 
-Use these to programatically change panels state
+#### Use these to programatically change panels state
 ```swift
 func expandPanel();
 func anchorPanel();
